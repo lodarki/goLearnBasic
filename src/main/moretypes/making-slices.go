@@ -2,15 +2,11 @@ package main
 
 import "fmt"
 
-//slice 由函数 make 创建。这会分配一个零长度的数组并且返回一个 slice 指向这个数组：
-//
-//a := make([]int, 5)  // len(a)=5
-//为了指定容量，可传递第三个参数到 `make`：
-//
-//b := make([]int, 0, 5) // len(b)=0, cap(b)=5
-//
-//b = b[:cap(b)] // len(b)=5, cap(b)=5 cap内置函数用来计算最大容量
-//b = b[1:]      // len(b)=4, cap(b)=4
+//向 slice 添加元素是一种常见的操作，因此 Go 提供了一个内建函数 `append`。 内建函数的文档对 append 有详细介绍。
+//func append(s []T, vs ...T) []T
+//append 的第一个参数 s 是一个类型为 T 的数组，其余类型为 T 的值将会添加到 slice。
+//append 的结果是一个包含原 slice 所有元素加上新添加的元素的 slice。
+//如果 s 的底层数组太小，而不能容纳所有值时，会分配一个更大的数组。 返回的 slice 会指向这个新分配的数组。
 func main() {
 	a := make([]int, 5)
 	printSlice("a", a)
