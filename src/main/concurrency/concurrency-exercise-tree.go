@@ -66,8 +66,8 @@ func collectLeafValue(tree *Tree, vschan chan int) {
 }
 
 func main() {
-	nodes1 := []int{5, 1, 8, 3, 13, 1, 2}
-	nodes2 := []int{8, 13, 3, 1, 1, 2, 5}
+	nodes1 := []int{5, 1, 8, 3, 13, 1, 2, 21, 23, 22, 28, 25, 30, 37, 50, 43, 32}
+	nodes2 := []int{8, 13, 3, 1, 1, 2, 5, 20, 15, 18, 14, 17, 12, 11}
 	trees1 := buildTrees(nodes1)
 	trees2 := buildTrees(nodes2)
 	fmt.Println(trees1) //树构建成功
