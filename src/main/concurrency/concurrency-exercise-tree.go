@@ -50,35 +50,43 @@ func buildTrees(vs []int) *Tree {
 	return rootTree
 }
 
-func collectTreeValues(tree *Tree) []int {
-	vsChan := make(chan int, 100)
-	go collectLeafValue(tree, vsChan)
-	var vs []int
-	//for element := range vsChan {
-	//	vs = append(vs, element)
-	//}
-	return vs
+func collectTreeValues(tree *Tree, vsChan chan int) {
+	collectLeafValue(tree, vsChan)
+	close(vsChan)
 }
 
 func collectLeafValue(tree *Tree, vschan chan int) {
 	vschan <- tree.Value
-	fmt.Println(len(vschan))
 	if tree.Left != nil {
-		go collectLeafValue(tree.Left, vschan)
+		collectLeafValue(tree.Left, vschan)
 	}
 	if tree.Right != nil {
-		go collectLeafValue(tree.Right, vschan)
+		collectLeafValue(tree.Right, vschan)
 	}
 }
 
 func main() {
-	nodes1 := []int{3, 1, 8, 5, 13, 1, 2}
+	nodes1 := []int{5, 1, 8, 3, 13, 1, 2}
 	nodes2 := []int{8, 13, 3, 1, 1, 2, 5}
 	trees1 := buildTrees(nodes1)
 	trees2 := buildTrees(nodes2)
 	fmt.Println(trees1) //树构建成功
 	fmt.Println(trees2) //树构建成功
 
-	fmt.Println(collectTreeValues(trees1))
-	fmt.Println(collectTreeValues(trees2))
+	vsChan1 := make(chan int, 100)
+	go collectTreeValues(trees1, vsChan1)
+	vsChan2 := make(chan int, 100)
+	go collectTreeValues(trees2, vsChan2)
+
+	var ints1 []int
+	for v := range vsChan1 {
+		ints1 = append(ints1, v)
+	}
+	fmt.Println(ints1)
+
+	var ints2 []int
+	for v := range vsChan2 {
+		ints2 = append(ints2, v)
+	}
+	fmt.Println(ints2)
 }
