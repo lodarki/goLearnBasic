@@ -12,8 +12,11 @@ func main() {
 	beego.SetLogger("file", `{"filename":"D:/gologs/socketserver.log"}`)
 	beego.SetLevel(beego.LevelDebug)
 	beego.SetLogFuncCall(true)
+	beego.Debug("beego tcpSocketListen")
+	go tcpSocketListen()
+	go socket.LoopReadFromSocketConn()
+	go socket.LoopWriteToSocketConn()
 	beego.Run()
-	tcpSocketListen()
 }
 
 /**
@@ -38,7 +41,8 @@ func tcpSocketListen() {
 			continue
 		}
 
-		socket.SocketMap[conn.RemoteAddr().String()] = conn
-		beego.Debug(socket.SocketMap)
+		maps := socket.GetSocketMaps()
+		maps[conn.RemoteAddr().String()] = &conn
+		beego.Debug(maps)
 	}
 }

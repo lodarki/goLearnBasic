@@ -12,8 +12,9 @@ func main() {
 	beego.SetLogger("file", `{"filename":"D:/gologs/socketclient.log"}`)
 	beego.SetLevel(beego.LevelDebug)
 	beego.SetLogFuncCall(true)
+	beego.Debug("socketDia() run")
+	go socketDia()
 	beego.Run()
-	socketDia()
 }
 
 func socketDia() {
@@ -30,8 +31,12 @@ func socketDia() {
 			time.Sleep(time.Duration(5) * time.Second)
 			continue
 		}
+
 		socket.SocketConn = &conn
-		beego.Debug(*socket.SocketConn)
+		beego.Debug("socket conn : ", *socket.SocketConn)
 		break
 	}
+
+	go socket.LoopPrintReadSocket()
+	go socket.LoopWriteSocket()
 }
