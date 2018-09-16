@@ -19,12 +19,12 @@ func WriteToSocket(b []byte) (int, error) {
 func LoopPrintReadSocket() {
 	readBuffer := make([]byte, 1024)
 	for {
-		_, e := ReadFromSocket(&readBuffer)
+		length, e := ReadFromSocket(&readBuffer)
 		if e != nil {
 			sleep5s()
 			continue
 		}
-		beego.Info("read from socket: ", string(readBuffer[:]))
+		beego.Info("read from socket: ", string(readBuffer[:length]))
 		sleep5s()
 	}
 }

@@ -43,6 +43,6 @@ func tcpSocketListen() {
 
 		maps := socket.GetSocketMaps()
 		maps[conn.RemoteAddr().String()] = &conn
-		beego.Debug(maps)
+		beego.Debug(conn)
 	}
 }

@@ -10,11 +10,11 @@ func ReadFromSocketConn() {
 	for key, value := range maps {
 		conn := *value
 		b := make([]byte, 1024)
-		_, err := conn.Read(b)
+		length, err := conn.Read(b)
 		if err != nil {
 			continue
 		}
-		beego.Info("read from socket Conn : ", key, " content: ", string(b))
+		beego.Info("read from socket Conn : ", key, " content: ", string(b[:length]))
 	}
 }
 
